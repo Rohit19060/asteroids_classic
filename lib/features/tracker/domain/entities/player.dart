@@ -4,10 +4,11 @@ class Player {
   Player({
     required this.position,
     required this.size,
-    this.radius = 0.0,
+    required this.radius,
+    required this.rotation,
   });
 
   ({double dx, double dy}) position;
   Size size;
-  double radius;
+  double radius, rotation;
 }

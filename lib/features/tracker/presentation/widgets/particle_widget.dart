@@ -20,7 +20,6 @@ class ParticleWidget extends StatelessWidget {
           color: theme.colorScheme.primary,
           shape: BoxShape.circle,
         ),
-        child: Text(particle.radius.toStringAsFixed(0)),
       ),
     );
   }

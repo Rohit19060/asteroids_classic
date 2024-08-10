@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -8,8 +10,8 @@ import '../domain/entities/particle.dart';
 import '../domain/entities/player.dart';
 import '../domain/usecases/check_collision.dart';
 import '../domain/usecases/generate_particles.dart';
+import 'widgets/cursor_widget.dart';
 import 'widgets/particle_widget.dart';
-import 'widgets/player_widget.dart';
 import 'widgets/timer_widget.dart';
 import 'widgets/try_again_screen.dart';
 
@@ -23,12 +25,16 @@ class TrackerBall extends StatefulWidget {
 class _TrackerBallState extends State<TrackerBall>
     with SingleTickerProviderStateMixin {
   final _player = Player(
-      position: (dx: 100, dy: 100), size: const Size(30, 30), radius: 15);
+    size: const Size(30, 30),
+    radius: 15,
+    rotation: 0,
+    position: (dx: 100, dy: 100),
+  );
   List<Particle> _particles = [];
   late final Ticker _ticker;
 
-  int count = 1;
-  double minSize = 20, maxSize = 50;
+  int count = 10;
+  double minSize = 10, maxSize = 100;
   bool _isGameOver = false;
   Duration _duration = Duration.zero;
 
@@ -99,14 +105,26 @@ class _TrackerBallState extends State<TrackerBall>
     if (_isGameOver) {
       return;
     }
-    setState(() =>
-        _player.position = (dx: details.position.dx, dy: details.position.dy));
+    _player.position = (dx: details.position.dx, dy: details.position.dy);
+    _player.rotation = _calculateRotation(details.position);
+    setState(() {});
   }
 
   @override
   void dispose() {
     _ticker.dispose();
     super.dispose();
+  }
+
+  double _calculateRotation(Offset pointerPosition) {
+    final size = MediaQuery.sizeOf(context);
+    // Calculate the center of the widget
+    final center = Offset(size.width / 2, size.height / 2);
+
+    // Calculate the angle between the center and the pointer position
+    final angle = (pointerPosition - center).direction;
+
+    return angle + pi / 2;
   }
 
   @override
@@ -126,11 +144,12 @@ class _TrackerBallState extends State<TrackerBall>
             .map((particle) => ParticleWidget(particle: particle))
             .toList(),
         AnimatedPositioned(
-          duration: const Duration(milliseconds: 60),
-          left: _player.position.dx - 12,
-          top: _player.position.dy - 12,
-          child: PlayerWidget(
-            player: _player,
+          duration: const Duration(milliseconds: 100),
+          left: _player.position.dx,
+          top: _player.position.dy,
+          child: CursorWidget(
+            size: _player.size,
+            rotation: _player.rotation, // Adjust the direction of the pointing
           ),
         ),
       ],
