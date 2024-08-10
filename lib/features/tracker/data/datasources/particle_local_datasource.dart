@@ -25,7 +25,9 @@ class ParticleLocalDataSource {
             _random.nextDouble() * 2 - 1, // Velocity y (-1 to 1)
           );
 
-          return ParticleModel(
+
+          return ParticleModel( 
+            radius: size / 2,
             size: size,
             position: (dx: position.dx, dy: position.dy),
             velocity: (dx: velocity.dx, dy: velocity.dy),

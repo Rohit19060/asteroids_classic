@@ -5,5 +5,6 @@ class ParticleModel extends Particle {
     required super.size,
     required super.position,
     required super.velocity,
+    required super.radius,
   });
 }

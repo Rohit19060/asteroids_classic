@@ -15,10 +15,12 @@ class ParticleWidget extends StatelessWidget {
       child: Container(
         width: particle.size,
         height: particle.size,
+        alignment: Alignment.center,
         decoration: BoxDecoration(
           color: theme.colorScheme.primary,
           shape: BoxShape.circle,
         ),
+        child: Text(particle.radius.toStringAsFixed(0)),
       ),
     );
   }
