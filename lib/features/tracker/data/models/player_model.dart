@@ -5,6 +5,5 @@ class PlayerModel extends Player {
     required super.size,
     required super.radius,
     required super.rotation,
-    required super.position,
   });
 }

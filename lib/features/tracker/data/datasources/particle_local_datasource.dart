@@ -26,7 +26,7 @@ class ParticleLocalDataSource {
           );
 
 
-          return ParticleModel( 
+          return ParticleModel(
             radius: size / 2,
             size: size,
             position: (dx: position.dx, dy: position.dy),

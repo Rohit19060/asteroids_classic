@@ -4,15 +4,17 @@ class CursorWidget extends StatelessWidget {
   const CursorWidget({
     super.key,
     required this.size,
-   required this.rotation,
+    required this.rotation,
   });
   final Size size;
   final double rotation;
 
   @override
-  Widget build(BuildContext context) => CustomPaint(
-        size: size,
-        painter: CursorPainter(rotation: rotation),
+  Widget build(BuildContext context) => GestureDetector(
+        child: CustomPaint(
+          size: size,
+          painter: CursorPainter(rotation: rotation),
+        ),
       );
 }
 
@@ -36,7 +38,7 @@ class CursorPainter extends CustomPainter {
     path.close(); // Complete the shape
 
     // Rotate and move the path based on the direction
-      // Rotate and move the path based on the rotation value
+    // Rotate and move the path based on the rotation value
     canvas.save();
     canvas.translate(size.width / 2, size.height / 2); // Move to center
     canvas.rotate(rotation); // Apply rotation
